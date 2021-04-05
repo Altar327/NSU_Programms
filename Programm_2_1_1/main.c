@@ -16,9 +16,8 @@ int counting_len_int(int x_int) {               //Функция для вычи
     return len_x;
 }
 
-
-void int_in_char (char *final_str, int *j, int *ind_int, char *ind_char, int quantity_ind, char *end) {
-    int x = (char *) memchr(ind_char, *end, quantity_ind) - ind_char;                       //Ищем номер ячейки, где лежит индекc
+void int_in_char (char *final_str, int *j, int *ind_int, char *end, int x) {
+//    int x = (char *) memchr(ind_char, *end, quantity_ind) - ind_char;                       //Ищем номер ячейки, где лежит индекc
     int len_x = counting_len_int(ind_int[x]);
     int r = ind_int[x];
     for (int i = len_x; i > 0; i--) {                           //Записываем в строку по порядку остатки
@@ -29,41 +28,60 @@ void int_in_char (char *final_str, int *j, int *ind_int, char *ind_char, int qua
     return;
 }
 
-void common (char **end, char *final_str, int *j, char *ind_char, int *ind_int, int quantity_ind, int *flag, int *score_p,
-       int *score_common, int *flag_letter) {
-    while (**end != ')') {                      //Идем пока часть рекурсии не закончится
-        if (**end == '(' && *(*end + 1) != 0 && !memchr(const_p, *(*end + 1),
-                                                        sign)) {                     //Вызываем рекурсию если увидели вложенный блок
+void recognition (char *final_str, int *j, char *ind_str[], int *ind_int, int quantity_ind, char *end_rec, *flag) {
+    if (isdigit(*end_rec)) {
+        while (*end_rec != 0) {
+            if (!isdigit(*end_rec)) {
+                (*flag)++;
+                return;
+            }
+            final_str[*j] = *end_rec;
+            (*j)++;
+            (*end_rec)++;
+        }
+    } else {
+        while (){
+
+        }
+
+    }
+}
+
+void common (char **end, char *final_str, int *j, char *ind_str[], int *ind_int, int quantity_ind, int *flag,
+       int *flag_letter) {
+    while (**end != ')' && **end != 0) {
+        int x = 0;
+        char str_for_recognition[max];
+        if (**end == '(') {                     //Вызываем рекурсию если увидели вложенный блок
             final_str[*j] = **end;
             (*j)++;
             (*end)++;
-            (*score_common)++;
-            common (end, final_str, j, ind_char, ind_int, quantity_ind, flag, score_p, score_common, flag_letter);
-        } else if (memchr(const_p, **end, sign) && *(*end + 1) != 0 &&
-                   *(*end + 1) != ')') {                     //Если встречаем знак - увеличиваем счетчик знаков и идем дальше
-            final_str[*j] = **end;
-            (*j)++;
-            (*end)++;
-            (*score_p)++;
-        } else if (memchr(ind_char, **end, quantity_ind) &&
-                   ((memchr(const_p, *(*end + 1), sign) && *(*end - 1) == '(') ||
-                    (memchr(const_p, *(*end - 1), sign) && *(*end + 1) ==
-                                                           ')'))) {                 //Если встречаем индекс - заменяем и идем дальше
-            int_in_char(final_str, j, ind_int, ind_char, quantity_ind, *end);
-            (*end)++;
-        } else if (!isdigit(**end) && !memchr(const_p, **end, sign) && !memchr(const_p, *(*end + 1), sign) &&
-                   *(*end + 1) != ')' && **end != '(' ||
-                   isdigit(**end) && *(*end + 1) != 0) {              //Если встречаем буквенное выражение или число
-            while (!memchr(const_p, **end, sign) && **end !=
-                                                    ')' && **end !=
-                                                           '(') {      //То идем по строке пока не встретим символ (нужно с последними скобками все отладить)
-                if (!isdigit(**end)) {          //(доп. задание) проверяем, что встроке не осталось букв
-                    (*flag_letter)++;
+            common(end, final_str, j, ind_str, ind_int, quantity_ind, flag, flag_letter);
+        } else if (!memchr(const_p, **end, sign)) {
+            int i = 0;
+            while (!memchr(const_p, **end, sign)) {
+                str_for_recognition[i] = **end;
+                i++;
+                (*end)++;
+                if (**end == ')' || **end == '(' || **end == 0) {
+                    (*flag)++;
+                    return;
+                }
+            }
+            str_for_recognition[i] = '\0';
+            char *end_rec = str_for_recognition;
+            recognition(final_str, *j, ind_str[], *ind_int, quantity_ind, end_rec, flag);
+            if (memchr(const_p, **end, sign)) {
+                if (x != 0) {
+                    (*flag)++;
+                    return;
                 }
                 final_str[*j] = **end;
-                (*end)++;
                 (*j)++;
+                (*end)++;
+                x++;
             }
+
         } else {                    //Если все сломалось
             (*flag)++;
             return;
@@ -95,7 +113,6 @@ int char_in_int (char *count) {                     //функция перев�
     }
     return x;
 }
-
 
 int counting_statement(char **end_counting) {               //Фукция считающея значение всего выражения
     int value1, value2 = 0;
@@ -135,13 +152,15 @@ int counting_statement(char **end_counting) {               //Фукция сч�
 int main() {
     int quantity_ind;
     scanf("%d\n", &quantity_ind);
-    char ind_char[max];
+
+    char ind_char[max][max];
     int ind_int[max];
     for (int i = 0; i < quantity_ind; i++) {
-        scanf("%c %d\n", &ind_char[i], &ind_int[i]);
+        scanf("%s %d\n", &ind_char[i], &ind_int[i]);
     }
-    ind_char[quantity_ind] = 0;
+
     char str[max];
+
     char final_str[max];
     scanf("%s", str);
     int j = 0;
@@ -177,7 +196,7 @@ int main() {
         flag++;
     }
 
-    if (!flag && score_p == score_common) {  //Выводим полученный массив, если мы не подняли флаг на крах рекурсии, и, если кол-во знаков совпадает с кол-вом открывающих скобок.
+    if (!flag) {  //Выводим полученный массив, если мы не подняли флаг на крах рекурсии, и, если кол-во знаков совпадает с кол-вом открывающих скобок.
         final_str[j] = 0;
         printf("%s", final_str);
 
