@@ -47,10 +47,10 @@ RM = D:\CLion\bin\cmake\win\bin\cmake.exe -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\User\CLionProjects\Programm_2_1_1
+CMAKE_SOURCE_DIR = C:\Users\User\CLionProjects\prog_2_1_1_rev
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\User\CLionProjects\Programm_2_1_1\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\User\CLionProjects\prog_2_1_1_rev\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\Programm_2_1_1\cmake-build-debug\CMakeFiles C:\Users\User\CLionProjects\Programm_2_1_1\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\prog_2_1_1_rev\cmake-build-debug\CMakeFiles C:\Users\User\CLionProjects\prog_2_1_1_rev\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\Programm_2_1_1\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\prog_2_1_1_rev\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -110,17 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named untitled3
+# Target rules for targets named prog_2_1_1_rev
 
 # Build rule for target.
-untitled3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 untitled3
-.PHONY : untitled3
+prog_2_1_1_rev: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 prog_2_1_1_rev
+.PHONY : prog_2_1_1_rev
 
 # fast build rule for target.
-untitled3/fast:
-	$(MAKE) -f CMakeFiles\untitled3.dir\build.make CMakeFiles/untitled3.dir/build
-.PHONY : untitled3/fast
+prog_2_1_1_rev/fast:
+	$(MAKE) -f CMakeFiles\prog_2_1_1_rev.dir\build.make CMakeFiles/prog_2_1_1_rev.dir/build
+.PHONY : prog_2_1_1_rev/fast
 
 main.obj: main.c.obj
 
@@ -128,7 +128,7 @@ main.obj: main.c.obj
 
 # target to build an object file
 main.c.obj:
-	$(MAKE) -f CMakeFiles\untitled3.dir\build.make CMakeFiles/untitled3.dir/main.c.obj
+	$(MAKE) -f CMakeFiles\prog_2_1_1_rev.dir\build.make CMakeFiles/prog_2_1_1_rev.dir/main.c.obj
 .PHONY : main.c.obj
 
 main.i: main.c.i
@@ -137,7 +137,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) -f CMakeFiles\untitled3.dir\build.make CMakeFiles/untitled3.dir/main.c.i
+	$(MAKE) -f CMakeFiles\prog_2_1_1_rev.dir\build.make CMakeFiles/prog_2_1_1_rev.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -146,7 +146,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) -f CMakeFiles\untitled3.dir\build.make CMakeFiles/untitled3.dir/main.c.s
+	$(MAKE) -f CMakeFiles\prog_2_1_1_rev.dir\build.make CMakeFiles/prog_2_1_1_rev.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -155,7 +155,7 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... untitled3
+	@echo ... prog_2_1_1_rev
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... main.obj
