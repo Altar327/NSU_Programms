@@ -70,6 +70,7 @@ void record (char **end, char *final_str, int *j, char id_str[][max], int *id_in
                 len_str_rec++;
                 (*end)++;
             }
+            str_rec[len_str_rec] = '\0';
             for (int i = 0; i < quantity_ind; i++) {
                 if (!strcmp(id_str[i], str_rec)) {
                     int_in_char(final_str, j, id_int, i);
@@ -85,43 +86,57 @@ void record (char **end, char *final_str, int *j, char id_str[][max], int *id_in
 }
 
 int common (char **end, char *final_str, int *j, char id_str[][max], int *id_int, int quantity_ind, int flag, int *flag_letter) {
+    int x = 0;
     if (**end == '(') {                     //Вызываем рекурсию если увидели вложенный блок
         final_str[*j] = **end;
         (*j)++;
         (*end)++;
         flag++;
-        return common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
-    } else if (!memchr(const_p, **end, sign) && **end != ')' && **end != 0 && **end != '_') {
+        x = common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
+    } else if (!memchr(const_p, **end, sign) && **end != ')' && **end != 0 && **end != '_') {           //Проверяем следующий символ после '(' или первый символ
         record (end, final_str, j, id_str, id_int, quantity_ind, flag_letter);
-        if (memchr(const_p, **end, sign) && flag) {
+        if (memchr(const_p, **end, sign) && flag) {                 //Смотрим, что это составное выражение, а не просто число или id
             final_str[*j] = **end;
             (*j)++;
             (*end)++;
-            if (**end == '(') {
+            int y = 0;
+            if (**end == '(') {                     //проверяем выражение вида (...+(...))
                 final_str[*j] = **end;
                 (*j)++;
                 (*end)++;
-                return common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
+                y = common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
             } else if (!memchr(const_p, **end, sign) && **end != ')' && **end != 0 && **end != '_') {
                 record(end, final_str, j, id_str, id_int, quantity_ind, flag_letter);
             } else {
                 return 0;
             }
-        } else if (**end == 0 && !flag) {
+            if (**end == ')' && y) {
+                final_str[*j] = **end;
+                (*j)++;
+                (*end)++;
+                if (memchr(const_p, **end, sign)) {
+                    return common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
+                }
+                return 1;
+            }
+        } else if (**end == 0 && !flag) {              //Выход из функции, если распознали только цифру или id
+            return 1;
+        } else if (**end == ')' && flag) {
+            final_str[*j] = **end;
+            (*j)++;
+            (*end)++;
             return 1;
         } else {
             return 0;
         }
-    } else {                    //Если все сломалось
+    } else {
         return 0;
     }
-    while (**end != 0) {
-        if (**end != ')') {
-            return 0;
-        }
+    if (**end == ')'  && x) {
         final_str[*j] = **end;
         (*j)++;
         (*end)++;
+        return 1;
     }
     return 1;
 }
