@@ -28,100 +28,57 @@ void int_in_char (char *final_str, int *j, int *id_int, int x) {
     return;
 }
 
-int recognition (char *end_rec, int *flag_letter) {
-    if (isdigit(*end_rec)) {
-        while (*end_rec != 0 && !memchr(const_p, *end_rec, sign) && *end_rec != '(' && *end_rec != ')') {
-            if (!isdigit(*end_rec)) {
+int recognition_word (char **end, char *final_str, int *j, char id_str[][max], int *id_int, int quantity_ind, int *flag_letter) {
+    if (isdigit(**end)) {
+        while (**end != 0 && !memchr(const_p, **end, sign) && **end != '(' && **end != ')') {
+            if (!isdigit(**end)) {
                 return 0;
             }
-            end_rec++;
-        }
-        return 1;
-    } else {
-        while (*end_rec != 0 && !memchr(const_p, *end_rec, sign) && *end_rec != '(') {
-            if (*end_rec == '(') {
-                return 0;
-            }
-            end_rec++;
-        }
-        return 2;
-    }
-}
-
-void record (char **end, char *final_str, int *j, char id_str[][max], int *id_int, int quantity_ind, int *flag_letter) {
-    int y = recognition(*end, flag_letter);
-    switch (y) {
-        case 0: {
-            return;
-        }
-        case 1: {
-            while (!memchr(const_p, **end, sign) && **end != 0 && **end != ')') {
-                final_str[*j] = **end;
-                (*j)++;
-                (*end)++;
-            }
-            return;
-        }
-        case 2: {
-            char str_rec[max];
-            int len_str_rec = 0;
-            while (!memchr(const_p, **end, sign) && **end != ')' && **end != 0) {
-                str_rec[len_str_rec] = **end;
-                len_str_rec++;
-                (*end)++;
-            }
-            str_rec[len_str_rec] = '\0';
-            for (int i = 0; i < quantity_ind; i++) {
-                if (!strcmp(id_str[i], str_rec)) {
-                    int_in_char(final_str, j, id_int, i);
-                    return;
-                }
-            }
-            strcat(final_str, str_rec);
-            (*j) += len_str_rec;
-            (*flag_letter)++;
-            return;
-        }
-    }
-}
-
-int common (char **end, char *final_str, int *j, char id_str[][max], int *id_int, int quantity_ind, int flag, int *flag_letter) {
-    int x = 0;
-    if (**end == '(') {                     //Вызываем рекурсию если увидели вложенный блок
-        final_str[*j] = **end;
-        (*j)++;
-        (*end)++;
-        flag++;
-        x = common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
-    } else if (!memchr(const_p, **end, sign) && **end != ')' && **end != 0 && **end != '_') {           //Проверяем следующий символ после '(' или первый символ
-        record (end, final_str, j, id_str, id_int, quantity_ind, flag_letter);
-        if (memchr(const_p, **end, sign) && flag) {                 //Смотрим, что это составное выражение, а не просто число или id
             final_str[*j] = **end;
             (*j)++;
             (*end)++;
-            int y = 0;
-            if (**end == '(') {                     //проверяем выражение вида (...+(...))
-                final_str[*j] = **end;
-                (*j)++;
-                (*end)++;
-                y = common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
-            } else if (!memchr(const_p, **end, sign) && **end != ')' && **end != 0 && **end != '_') {
-                record(end, final_str, j, id_str, id_int, quantity_ind, flag_letter);
-            } else {
+        }
+        return 1;
+    } else {
+        char str_rec[max];
+        int i = 0;
+        while (**end != 0 && !memchr(const_p, **end, sign) && **end != ')') {
+            if (**end == '(') {
                 return 0;
             }
-            if (**end == ')' && y) {
-                final_str[*j] = **end;
-                (*j)++;
-                (*end)++;
-                if (memchr(const_p, **end, sign)) {
-                    return common(end, final_str, j, id_str, id_int, quantity_ind, flag, flag_letter);
+            str_rec[i] = **end;
+            i++;
+            (*end)++;
+        }
+        str_rec[i] = '\0';
+        for (int n = 0; n < quantity_ind; n++) {
+                if (!strcmp(id_str[n], str_rec)) {
+                    int_in_char(final_str, j, id_int, n);
+                    return 1;
                 }
-                return 1;
             }
-        } else if (**end == 0 && !flag) {              //Выход из функции, если распознали только цифру или id
-            return 1;
-        } else if (**end == ')' && flag) {
+        strcat(final_str, str_rec);
+        (*j) += i;
+        (*flag_letter)++;
+        return 1;
+    }
+}
+
+int recognition_common_statement (char **end, char *final_str, int *j, char id_str[][max], int *id_int, int quantity_ind, int *flag_letter) {
+    if (**end == '(') {
+        final_str[*j] = **end;
+        (*j)++;
+        (*end)++;
+        int value1 = recognition_common_statement(end, final_str, j, id_str, id_int, quantity_ind, flag_letter);
+        if (memchr(const_p, **end, sign)) {
+            final_str[*j] = **end;
+            (*j)++;
+            (*end)++;
+        } else {
+            return 0;
+        }
+        int value2 = recognition_common_statement(end, final_str, j, id_str, id_int, quantity_ind, flag_letter);
+        if (value1 && value2 && **end == ')'){
             final_str[*j] = **end;
             (*j)++;
             (*end)++;
@@ -129,16 +86,11 @@ int common (char **end, char *final_str, int *j, char id_str[][max], int *id_int
         } else {
             return 0;
         }
+    } else if (!memchr(const_p, **end, sign) && **end != ')' && **end != 0 && **end != '_' && recognition_word(end, final_str, j, id_str, id_int, quantity_ind, flag_letter)) {
+        return 1;
     } else {
         return 0;
     }
-    if (**end == ')'  && x) {
-        final_str[*j] = **end;
-        (*j)++;
-        (*end)++;
-        return 1;
-    }
-    return 1;
 }
 
 
@@ -218,9 +170,10 @@ int main() {
 
     int flag_letter = 0;
 
-    if (common(&end, final_str, &j, ind_char, ind_int, quantity_ind, flag, &flag_letter)) {  //Выводим полученный массив, если мы не подняли флаг на крах рекурсии, и, если кол-во знаков совпадает с кол-вом открывающих скобок.
+    if (recognition_common_statement(&end, final_str, &j, ind_char, ind_int, quantity_ind, &flag_letter)/*common(&end, final_str, &j, ind_char, ind_int, quantity_ind, flag, &flag_letter)*/) {  //Выводим полученный массив, если мы не подняли флаг на крах рекурсии, и, если кол-во знаков совпадает с кол-вом открывающих скобок.
         final_str[j] = 0;
         printf("%s", final_str);
+//        printf("1");
 
         //Вывод значения выражения
 

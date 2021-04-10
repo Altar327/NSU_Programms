@@ -1,3 +1,3 @@
-C:/Users/User/CLionProjects/prog_2_1_1_rev/cmake-build-debug/CMakeFiles/prog_2_1_1_rev.dir
-C:/Users/User/CLionProjects/prog_2_1_1_rev/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/CLionProjects/prog_2_1_1_rev/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/User/CLionProjects/Programm_2_1_1/cmake-build-debug/CMakeFiles/prog_2_1_1_rev.dir
+C:/Users/User/CLionProjects/Programm_2_1_1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/User/CLionProjects/Programm_2_1_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
