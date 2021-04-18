@@ -6,9 +6,15 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/User/CLionProjects/Programm_3_1_1/main.c
+C:/Users/User/CL/Programm_3_1_1/main.c
 stdio.h
 -
+windows.h
+-
+stdlib.h
+-
 math.h
+-
+time.h
 -
 

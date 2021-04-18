@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "agents.h": "c",
+        "cmath": "c",
+        "cstdio": "c"
+    }
+}
