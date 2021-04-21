@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#define max_N 50
-#define max_k 64
-#define num_loops 100
+#define max_N 10                //максимальное случайное кол-во матриц
+#define max_k 10                // максимальная случайная величина матрицы
+#define num_loops 100           //Кол-во запусков программы
 
 void swap (int *a, int *b) {
     int x = *a;
@@ -19,7 +19,7 @@ void quick_sort(int *array, int first, int last, int *address_matrix) {
     {
         int left = first;
         int right = last;
-        int middle = rand() % last;
+        int middle = array[rand() % last];
         while (left <= right) {
             while (array[left] < middle) {
                 left++;
@@ -74,14 +74,14 @@ int det (int matrix[][max_k], int k, int set_col[], int start_row, int minor_ran
 void randomiz () {
     FILE *rand_input;
     rand_input = fopen("input.txt", "w");
-    int r_N = 10;
+    int r_N = (rand() % max_N) + 1;
     fprintf (rand_input, "%d\n", r_N);
     for (int n = 0; n < r_N; n++) {
-        int k_matrix = rand() % 10;
+        int k_matrix = rand() % max_k;
         fprintf (rand_input, "%d\n", k_matrix);
         for (int i = 0; i < k_matrix; i++) {                      //начинаем считывать матрицу
             for (int j = 0; j < k_matrix; j++) {
-                fprintf(rand_input, "%d ", rand() % 10);
+                fprintf(rand_input, "%d ", rand() % k_matrix);
             }
             fprintf(rand_input, "\n");
         }
@@ -92,18 +92,8 @@ void randomiz () {
 
 int main() {
     srand(time(NULL));
-
-    randomiz();
-
-    clock_t start, finish;
-    double sum_time = 0;
-
-    FILE *time_output;
-    time_output = fopen("time_output.txt", "w");
-
-    for (int loops = 0; loops < num_loops; loops++) {
-        int N;                    //Кол-во матриц
-        int matrix[max_N][max_k][max_k];        //массив для хранения матриц
+    int N;                    //Кол-во матриц
+    int matrix[max_N][max_k][max_k];        //массив для хранения матриц
 //        int ***matrix = (int ***) malloc(max_N * sizeof(int **));           //массив для хранения матриц
 //        for (int i = 0; i < max_k; i++) {
 //            matrix[i] = (int **) malloc(max_k * sizeof(int *));
@@ -113,12 +103,25 @@ int main() {
 //        }
 
 //         int* A = (int*)malloc(M * N * O * sizeof(int));
-        int *det_matrix = malloc(N * sizeof(int));
-        int *address_matrix = malloc(N * sizeof(int));
-        int *k_matrix = malloc(N * sizeof(int));             //Размерность матриц
-//         int det_matrix[max_N];
-//         int address_matrix[max_N];
-//         int k_matrix[max_N];                    //Размерность матриц
+//    int *det_matrix = malloc(N * sizeof(int));
+//    int *address_matrix = malloc(N * sizeof(int));
+//    int *k_matrix = malloc(N * sizeof(int));             //Размерность матриц
+    int det_matrix[max_N];
+    int address_matrix[max_N];
+    int k_matrix[max_N];                    //Размерность матриц
+
+    randomiz();
+
+    clock_t start, finish;
+    double sum_time = 0;
+    double x_time[num_loops];
+    double min_time = 10000;
+    double max_time = 0;
+
+    FILE *time_output;
+    time_output = fopen("time_output.txt", "w");
+
+    for (int loops = 0; loops < num_loops; loops++) {
         start = clock();
 
         int set_col[max_k];                         //Массив с "пометками", какую строку мы вычеркиваем
@@ -167,14 +170,24 @@ int main() {
         }
 
         fclose(output);
-//        Sleep(1);
+        Sleep(5);
         finish = clock();
-        sum_time += (finish - start) / CLOCKS_PER_SEC;
-        fprintf(time_output, "%2.3f\n", (double) (finish - start) / CLOCKS_PER_SEC);
+//        printf ("%2.3f", (double) (finish - start) / CLOCKS_PER_SEC);
+        double time = (double) (finish - start) / CLOCKS_PER_SEC;
+        x_time[loops] = time;
+        if (time < min_time) {
+            min_time = time;
+        }
+        if (time > max_time) {
+            max_time = time;
+        }
+        sum_time += time;
 
-        free(det_matrix);
-        free(address_matrix);
-        free(k_matrix);
+        fprintf(time_output, "%lf\n", time);
+
+//        free(det_matrix);
+//        free(address_matrix);
+//        free(k_matrix);
 //        for (int i = 0; i < max_N; i++) {
 //            for (int j = 0; j < max_k; j++) {
 //                free(matrix[i][j]);
@@ -183,7 +196,16 @@ int main() {
 //        }
 //        free(matrix);
     }
-     fclose(time_output);
+    fprintf(time_output, "\n");
+    fprintf(time_output, "Максимальное время: %lf\nМинимальное время: %lf\n\n", max_time, min_time);
+    double x = sum_time / num_loops;
+    fprintf(time_output, "Выборочное отклонение %lf\n\n", x);           //Выборочное отклонение
+    double S = 0;
+    for (int i = 0; i < num_loops; i++) {
+        S += pow((x_time[i] - x), 2);
+    }
+    fprintf(time_output, "Среднеквадрати́ческое отклоне́ние %lf", sqrt(S/num_loops));
+    fclose(time_output);
 
     return 0;
 }
