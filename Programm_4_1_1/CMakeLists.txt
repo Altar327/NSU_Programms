@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
-project(Programm_4_1_1 C)
+project(untitled6 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Programm_4_1_1 main.c)
+add_executable(untitled6 main.c)

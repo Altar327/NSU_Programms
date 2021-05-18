@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/User/CLionProjects/Programm_4_1_1
+# Install script for directory: C:/Users/User/CLionProjects/Prog_4_1_2_with_dop
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Programm_4_1_1")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/untitled6")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/User/CLionProjects/Programm_4_1_1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/User/CLionProjects/Prog_4_1_2_with_dop/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

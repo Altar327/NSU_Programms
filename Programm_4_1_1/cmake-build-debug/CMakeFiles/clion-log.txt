@@ -1,4 +1,4 @@
-D:\CLion\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\User\CLionProjects\Programm_4_1_1
+D:\CLion\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\User\CLionProjects\Prog_4_1_2_with_dop
 -- The C compiler identification is GNU 6.3.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
@@ -7,4 +7,4 @@ D:\CLion\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - M
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/User/CLionProjects/Programm_4_1_1/cmake-build-debug
+-- Build files have been written to: C:/Users/User/CLionProjects/Prog_4_1_2_with_dop/cmake-build-debug

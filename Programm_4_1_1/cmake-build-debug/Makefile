@@ -66,10 +66,10 @@ RM = D:\CLion\bin\cmake\win\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\User\CLionProjects\Programm_4_1_1
+CMAKE_SOURCE_DIR = C:\Users\User\CLionProjects\Prog_4_1_2_with_dop
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\User\CLionProjects\Programm_4_1_1\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\User\CLionProjects\Prog_4_1_2_with_dop\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -98,9 +98,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\Programm_4_1_1\cmake-build-debug\CMakeFiles C:\Users\User\CLionProjects\Programm_4_1_1\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\Prog_4_1_2_with_dop\cmake-build-debug\CMakeFiles C:\Users\User\CLionProjects\Prog_4_1_2_with_dop\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\Programm_4_1_1\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\Prog_4_1_2_with_dop\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,17 +129,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Programm_4_1_1
+# Target rules for targets named untitled6
 
 # Build rule for target.
-Programm_4_1_1: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Programm_4_1_1
-.PHONY : Programm_4_1_1
+untitled6: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 untitled6
+.PHONY : untitled6
 
 # fast build rule for target.
-Programm_4_1_1/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Programm_4_1_1.dir\build.make CMakeFiles/Programm_4_1_1.dir/build
-.PHONY : Programm_4_1_1/fast
+untitled6/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled6.dir\build.make CMakeFiles/untitled6.dir/build
+.PHONY : untitled6/fast
 
 main.obj: main.c.obj
 
@@ -147,7 +147,7 @@ main.obj: main.c.obj
 
 # target to build an object file
 main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Programm_4_1_1.dir\build.make CMakeFiles/Programm_4_1_1.dir/main.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled6.dir\build.make CMakeFiles/untitled6.dir/main.c.obj
 .PHONY : main.c.obj
 
 main.i: main.c.i
@@ -156,7 +156,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Programm_4_1_1.dir\build.make CMakeFiles/Programm_4_1_1.dir/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled6.dir\build.make CMakeFiles/untitled6.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -165,7 +165,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Programm_4_1_1.dir\build.make CMakeFiles/Programm_4_1_1.dir/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled6.dir\build.make CMakeFiles/untitled6.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -176,7 +176,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... Programm_4_1_1
+	@echo ... untitled6
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
